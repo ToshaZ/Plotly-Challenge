@@ -31,16 +31,16 @@ function init() {
             var samples = data.samples;
             var filterSamples = samples.filter(sampleItem => sampleItem.id == sample);
             var results = filterSamples[0];
-            var sampleValues = results.sample_values;
-            var otuIds = results.otu_ids;
-            var otuLabels = results.otu_labels;
+            var sampleValues = results.sample_values.slice(0,10);
+            var otuIds = results.otu_ids.slice(0,10).map(id => `OTU ID ${id}`);
+            var otuLabels = results.otu_labels.slice(0,10);
 
             console.log(results)
             console.log(sampleValues)
 
             //Trace data to plot
             var trace1 = {
-                x: sampleValues,
+                x: sampleValues.reverse(),
                 y: otuIds,
                 text: otuLabels,
                 type: "bar",
