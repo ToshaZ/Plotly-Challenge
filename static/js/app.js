@@ -2,7 +2,7 @@
 function init() {
 
     //Grab data from JSON file
-    d3.json("../../data/samples.json").then((importedData) => {
+    d3.json("data/samples.json").then((importedData) => {
         // print data
         console.log(importedData);
         //console.log(importedData.samples[0]);
@@ -28,7 +28,7 @@ function init() {
 
     //Create Charts
     function createCharts(sample) {
-        d3.json("../../data/samples.json").then((data) => {
+        d3.json("data/samples.json").then((data) => {
             var samples = data.samples;
             var filterSamples = samples.filter(sampleItem => sampleItem.id == sample);
             var results = filterSamples[0];
