@@ -95,6 +95,47 @@ function init() {
 
             console.log(filterResults)
 
+            //---------------------------------------------------
+
+            //Create Gauge chart
+            var wfreq = filterResults.wfreq
+            if (wfreq == null) {
+                wfreq = 0;
+            }
+
+
+            var trace2 = {
+                domain: {x: [0,1], y: [0, 1] },
+                value: wfreq,
+                type: "indicator",
+                mode: "gauge+number",
+                gauge: {
+                    axis: { 
+                        range: [null, 9],
+                        tickmode: "linear",
+                        tickfont: {size: 15},
+                    },
+                    bar: null,
+                    bgcolor: "Greens",
+                    steps: [
+                        { range: [0, 1], color: "light yellow" },
+                        { range: [1, 2], color: "yellow" },
+                        { range: [2, 3], color: "cyan" },
+                        { range: [3, 4]},
+                        { range: [4, 5], color: "teal" },
+                        { range: [5, 6]},
+                        { range: [6, 7], color: "lime" },
+                        { range: [7, 8]},
+                        { range: [8, 9], color: "green" },
+                      ]
+                }
+            };
+
+            var gaugeData = [trace2];
+
+            // Render the plot gauge chart
+            Plotly.newPlot("gauge", gaugeData);
+
         });
     };
     
