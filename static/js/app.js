@@ -81,6 +81,20 @@ function init() {
             // Render the plot bar chart
             Plotly.newPlot("bar", chartData);
 
+            //---------------------------------------------------
+
+            //Create panel data
+            var panel = d3.select("#sample-metadata");
+            panel.html("");
+            var metadata = data.metadata;
+            var filteredData = metadata.filter(data => data.id == sample);
+            var filterResults = filteredData[0];
+            Object.entries(filterResults).forEach(([key, value]) => {
+                panel.append("h4").text(`${key}: ${value}`)
+            });
+
+            console.log(filterResults)
+
         });
     };
     
