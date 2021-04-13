@@ -24,21 +24,50 @@ function init() {
     });
 }
 
+//---------------------------------------------------------------
 
-    //Create Bar Chart
+    //Create Charts
     function createCharts(sample) {
         d3.json("../../data/samples.json").then((data) => {
             var samples = data.samples;
             var filterSamples = samples.filter(sampleItem => sampleItem.id == sample);
             var results = filterSamples[0];
-            var sampleValues = results.sample_values.slice(0,10);
-            var otuIds = results.otu_ids.slice(0,10).map(id => `OTU ID ${id}`);
-            var otuLabels = results.otu_labels.slice(0,10);
+            var sampleValues = results.sample_values;
+            var otuIds = results.otu_ids;
+            var otuLabels = results.otu_labels;
 
             console.log(results)
             console.log(sampleValues)
 
-            //Trace data to plot
+            //---------------------------------------------------
+
+            //Trace data to Bubble Chart
+            var trace = {
+                x: otuIds,
+                y: sampleValues,
+                mode: "markers",
+                marker: {
+                    size: sampleValues,
+                    color:  otuIds
+                },
+                text: otuLabels
+            };
+
+            var bubbleData = [trace];
+
+            // Render the plot Bubble chart
+            Plotly.newPlot("bubble", bubbleData);
+
+            //---------------------------------------------------
+
+            //Update sample values 
+            var sampleValues = results.sample_values.slice(0,10);
+            var otuIds = results.otu_ids.slice(0,10).map(id => `OTU ID ${id}`);
+            var otuLabels = results.otu_labels.slice(0,10);
+
+            console.log(sampleValues)
+
+            //Trace data to Bar chart
             var trace1 = {
                 x: sampleValues.reverse(),
                 y: otuIds,
@@ -51,9 +80,12 @@ function init() {
 
             // Render the plot bar chart
             Plotly.newPlot("bar", chartData);
+
         });
     };
     
+//-------------------------------------------------------------
+
     //Create new function to reset chart with new ID
     function optionChanged(newSample) {
         createCharts(newSample);
